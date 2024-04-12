@@ -2,38 +2,94 @@ package com.backend.hocmai_be.Model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
-@Getter
-@Setter
 @Entity
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class User {
+@Getter
+@Setter
+public class User implements UserDetails {
     @Id
-    @Generated
+    @JsonIgnore
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(length = 50)
     private String email;
 
-    @Column(length = 50)
+    @Column
+    @JsonIgnore
     private String password;
 
     @Column(length = 15)
     private String phone;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
+    @Column
     private String avatar;
 
     @Column(length = 5)
     private String gender;
-    private Date date_of_birth;
+    @Column
+    private Date dateOfBirth;
+
+    public User(String email, String password, String phone, String avatar, String gender, Date dateOfBirth) {
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+        this.avatar = avatar;
+        this.gender = gender;
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role",joinColumns = @JoinColumn(name = "user", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role", referencedColumnName = "id"))
+    private Set<Role> roles = new HashSet<>();
+
+    public User() {
+
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<SimpleGrantedAuthority> authorities = this.roles.stream().map((role) -> new SimpleGrantedAuthority(role.getRole_name())).collect(Collectors.toList());
+        return authorities;
+    }
+
+    @Override
+    @JsonIgnore
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isEnabled() {
+        return true;
+    }
 
 }

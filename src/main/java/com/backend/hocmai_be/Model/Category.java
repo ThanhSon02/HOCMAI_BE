@@ -1,27 +1,22 @@
 package com.backend.hocmai_be.Model;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
-@Getter
-@Setter
 @Entity
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class Category {
 
     @Id
-    @Generated
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
+    @Column
     private String category_name;
+    @OneToMany(mappedBy = "id",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Course> courses = new ArrayList<>();
 
-    @OneToMany(mappedBy = "course_name", cascade = CascadeType.ALL)
-    private Collection<Course> courses;
 }

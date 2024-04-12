@@ -8,16 +8,15 @@ import lombok.Setter;
 
 @Entity
 @Data
-@Setter
-@Getter
 public class Lesson {
 
     @Id
-    @Generated
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column
     private String lesson_name;
+
     @Column
     private Integer minute;
 

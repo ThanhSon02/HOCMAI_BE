@@ -1,22 +1,21 @@
 package com.backend.hocmai_be.Model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
-@Setter
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
 public class Subject {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column
     private String subject_name;
 
-
+    @OneToMany(mappedBy = "id",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<Course> courses = new ArrayList<>();
 }
