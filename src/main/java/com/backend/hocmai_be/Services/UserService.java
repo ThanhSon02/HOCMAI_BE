@@ -15,8 +15,11 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
     private ModelMapper modelMapper;
+    public UserService() {
+        this.modelMapper = new ModelMapper();
+    }
+
     public Optional<User> findUserByEmail(String email) {
         return userRepository.findUserByEmail(email);
     }
@@ -32,5 +35,7 @@ public class UserService {
         return dto;
     }
 
-
+    public User save(User user) {
+        return userRepository.save(user);
+    }
 }

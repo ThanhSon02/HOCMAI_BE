@@ -55,9 +55,11 @@ public class AuthController {
         String phone = registerRequest.getPhone();
         String avatar = registerRequest.getAvatar();
         String gender = registerRequest.getGender();
+        String firstName = registerRequest.getFirstName();
+        String lastName = registerRequest.getLastName();
         Role role = roleService.findById(3);
         Date dateOfBirth = registerRequest.getDateOfBirth();
-        User user = new User(email, passwordEncode, phone, avatar, gender, dateOfBirth);
+        User user = new User(email, passwordEncode, phone, avatar, gender, dateOfBirth, firstName, lastName);
         user.getRoles().add(role);
         User result = userService.save(user);
         response.setSuccess(true);
@@ -81,7 +83,7 @@ public class AuthController {
         }
         User userDetails = userDetailsService.loadUserByUsername(loginRequest.getEmail());
         String jwt = jwtUtil.generateToken(userDetails);
-        UserDto userResponse = new UserDto(userDetails.getEmail(),userDetails.getPhone(),userDetails.getGender(),userDetails.getDate_of_birth(), userDetails.getAvatar(),userDetails.getRoles());
+        UserDto userResponse = new UserDto(userDetails.getEmail(),userDetails.getPhone(),userDetails.getGender(),userDetails.getDateOfBirth(), userDetails.getAvatar(), userDetails.getFirstName(), userDetails.getLastName(),userDetails.getRoles());
         JwtAuthResponse jwtAuthResponse = new JwtAuthResponse();
         jwtAuthResponse.setToken(jwt);
         Map<String, Object> map = new HashMap<>();

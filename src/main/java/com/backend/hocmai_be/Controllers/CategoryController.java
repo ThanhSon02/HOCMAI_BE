@@ -14,11 +14,10 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping(value = "/api/category")
 public class CategoryController {
     @Autowired
     private CategoriesService categoriesService;
-    @GetMapping("/getAll")
+    @GetMapping("/public/api/category/getAll")
     public ResponseEntity<ApiBaseResponse> getAll() {
         ApiBaseResponse response = new ApiBaseResponse();
         try {
@@ -38,7 +37,7 @@ public class CategoryController {
         }
     }
 
-    @PostMapping("/save")
+    @PostMapping("/api/category/save")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<ApiBaseResponse> addCategory(@RequestBody String categoryName) {
         ApiBaseResponse response = new ApiBaseResponse();

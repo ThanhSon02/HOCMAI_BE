@@ -24,6 +24,12 @@ public class User implements UserDetails {
     @Column(length = 50)
     private String email;
 
+    @Column(length = 20)
+    private String firstName;
+
+    @Column(length = 20)
+    private String lastName;
+
     @Column
     @JsonIgnore
     private String password;
@@ -39,13 +45,15 @@ public class User implements UserDetails {
     @Column
     private Date dateOfBirth;
 
-    public User(String email, String password, String phone, String avatar, String gender, Date dateOfBirth) {
+    public User(String email, String password, String phone, String avatar, String gender, Date dateOfBirth, String firstName, String lastName) {
         this.email = email;
         this.password = password;
         this.phone = phone;
         this.avatar = avatar;
         this.gender = gender;
         this.dateOfBirth = dateOfBirth;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

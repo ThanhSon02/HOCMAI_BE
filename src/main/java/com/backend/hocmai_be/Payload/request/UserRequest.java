@@ -12,4 +12,6 @@ public class UserRequest {
     private String gender;
     private String phone;
     private Date dateOfBirth;
+    private String firstName;
+    private String lastName;
 }
