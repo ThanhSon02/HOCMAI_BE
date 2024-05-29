@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
+import net.minidev.json.annotate.JsonIgnore;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,35 +18,40 @@ public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private int id;
 
     @Column
-    private String course_name;
+    private String courseName;
 
     @Column
     private Long price;
 
     @Column
-    private Date begin_time;
-
-    @Column
-    private Date end_time;
+    private Long salePrice;
 
     @Column
     private String description;
 
     @Column
-    private String image_link;
-
-    @Column
-    private String video_link;
+    private String imageLink;
 
     @ManyToOne
     private Category category;
 
-    @ManyToOne
-    private Subject subject;
-
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Lesson> lessons = new ArrayList<>();
+    @JsonIgnore
+    private List<Chapter> chapters = new ArrayList<>();
+
+    public Course(String courseName, Long price, Long salePrice, String description, String imageLink, Category category) {
+        this.courseName = courseName;
+        this.price = price;
+        this.salePrice = salePrice;
+        this.description = description;
+        this.imageLink = imageLink;
+        this.category = category;
+    }
+
+    public Course() {
+
+    }
 }

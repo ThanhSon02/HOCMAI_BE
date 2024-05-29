@@ -7,7 +7,7 @@ import com.backend.hocmai_be.Payload.request.LoginRequest;
 import com.backend.hocmai_be.Payload.request.UserRequest;
 import com.backend.hocmai_be.Payload.response.ApiBaseResponse;
 import com.backend.hocmai_be.Payload.response.JwtAuthResponse;
-import com.backend.hocmai_be.Payload.response.UserDto;
+import com.backend.hocmai_be.Payload.DTO.UserDto;
 import com.backend.hocmai_be.Services.RoleService;
 import com.backend.hocmai_be.Services.UserService;
 import com.backend.hocmai_be.Util.JwtUtil;
@@ -55,11 +55,10 @@ public class AuthController {
         String phone = registerRequest.getPhone();
         String avatar = registerRequest.getAvatar();
         String gender = registerRequest.getGender();
-        String firstName = registerRequest.getFirstName();
-        String lastName = registerRequest.getLastName();
-        Role role = roleService.findById(3);
-        Date dateOfBirth = registerRequest.getDateOfBirth();
-        User user = new User(email, passwordEncode, phone, avatar, gender, dateOfBirth, firstName, lastName);
+        String name = registerRequest.getName();
+        Role role = roleService.findById(1);
+        Date dateOfBirth = null;
+        User user = new User(email, passwordEncode, phone, avatar, gender, dateOfBirth, name);
         user.getRoles().add(role);
         User result = userService.save(user);
         response.setSuccess(true);
@@ -78,12 +77,11 @@ public class AuthController {
             response.setMessage(e.getMessage());
             response.setSuccess(false);
             response.setStatus(401);
-//            throw new ApiException("fenwif");
             return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
         }
         User userDetails = userDetailsService.loadUserByUsername(loginRequest.getEmail());
         String jwt = jwtUtil.generateToken(userDetails);
-        UserDto userResponse = new UserDto(userDetails.getEmail(),userDetails.getPhone(),userDetails.getGender(),userDetails.getDateOfBirth(), userDetails.getAvatar(), userDetails.getFirstName(), userDetails.getLastName(),userDetails.getRoles());
+        UserDto userResponse = new UserDto(userDetails.getId(),userDetails.getEmail(),userDetails.getAvatar(),userDetails.getGender(),userDetails.getDateOfBirth(), userDetails.getPhone(), userDetails.getName(),userDetails.getRoles());
         JwtAuthResponse jwtAuthResponse = new JwtAuthResponse();
         jwtAuthResponse.setToken(jwt);
         Map<String, Object> map = new HashMap<>();

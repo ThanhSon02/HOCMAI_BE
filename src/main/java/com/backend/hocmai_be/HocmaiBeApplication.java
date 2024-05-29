@@ -25,18 +25,18 @@ public class HocmaiBeApplication implements CommandLineRunner {
 //
 //            Role role = new Role();
 //            role.setId(0);
-//            role.setRole_name("ROLE_ADMIN");
+//            role.setRoleName("ROLE_ADMIN");
 //
 //            Role role1 = new Role();
 //            role1.setId(1);
-//            role1.setRole_name("ROLE_NORMAL");
+//            role1.setRoleName("ROLE_NORMAL");
 //
 //            List<Role> roles = List.of(role,role1);
 //
 //            List<Role> result = this.roleRepo.saveAll(roles);
 //
 //            result.forEach(r -> {
-//                System.out.println(r.getRole_name());
+//                System.out.println(r.getRoleName());
 //            });
 //
 //        } catch (Exception e) {

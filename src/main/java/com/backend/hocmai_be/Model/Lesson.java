@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
+import net.minidev.json.annotate.JsonIgnore;
 
 @Entity
 @Data
@@ -12,15 +13,25 @@ public class Lesson {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private int id;
 
     @Column
-    private String lesson_name;
+    private String lessonName;
 
     @Column
-    private Integer minute;
+    private String lessonVideoLink;
 
-    @ManyToOne
-    @JoinColumn(name = "course_id")
-    private Course course;
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "chapter_id")
+    @JsonIgnore
+    private Chapter chapter;
+
+    public Lesson() {
+    }
+
+    public Lesson(String lessonName, String lessonVideoLink, Chapter chapter) {
+        this.lessonName = lessonName;
+        this.lessonVideoLink = lessonVideoLink;
+        this.chapter = chapter;
+    }
 }

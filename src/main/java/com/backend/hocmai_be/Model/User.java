@@ -19,16 +19,13 @@ public class User implements UserDetails {
     @Id
     @JsonIgnore
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private int id;
 
     @Column(length = 50)
     private String email;
 
     @Column(length = 20)
-    private String firstName;
-
-    @Column(length = 20)
-    private String lastName;
+    private String name;
 
     @Column
     @JsonIgnore
@@ -45,15 +42,14 @@ public class User implements UserDetails {
     @Column
     private Date dateOfBirth;
 
-    public User(String email, String password, String phone, String avatar, String gender, Date dateOfBirth, String firstName, String lastName) {
+    public User(String email, String password, String phone, String avatar, String gender, Date dateOfBirth, String name) {
         this.email = email;
         this.password = password;
         this.phone = phone;
         this.avatar = avatar;
         this.gender = gender;
         this.dateOfBirth = dateOfBirth;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.name = name;
     }
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -66,7 +62,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<SimpleGrantedAuthority> authorities = this.roles.stream().map((role) -> new SimpleGrantedAuthority(role.getRole_name())).collect(Collectors.toList());
+        List<SimpleGrantedAuthority> authorities = this.roles.stream().map((role) -> new SimpleGrantedAuthority(role.getRoleName())).collect(Collectors.toList());
         return authorities;
     }
 

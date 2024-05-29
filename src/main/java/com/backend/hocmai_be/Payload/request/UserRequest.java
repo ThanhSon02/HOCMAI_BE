@@ -6,12 +6,12 @@ import java.util.Date;
 
 @Data
 public class UserRequest {
+    private int id;
     private String email;
     private String password;
     private String avatar;
     private String gender;
     private String phone;
-    private Date dateOfBirth;
-    private String firstName;
-    private String lastName;
+    private String dateOfBirth;
+    private String name;
 }

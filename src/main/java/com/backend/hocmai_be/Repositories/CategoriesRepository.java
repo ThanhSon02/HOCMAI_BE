@@ -7,6 +7,7 @@ import java.util.List;
 
 @Repository
 public interface CategoriesRepository extends JpaRepository<Category, Integer> {
-    @Query(value = "SELECT c FROM Category c WHERE c.category_name like %?1%")
+    @Query(value = "SELECT c FROM Category c WHERE c.categoryName like %?1%")
     List<Category> findCategoriesByName(String categoryName);
+
 }
