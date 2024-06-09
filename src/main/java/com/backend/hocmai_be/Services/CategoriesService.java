@@ -1,8 +1,11 @@
 package com.backend.hocmai_be.Services;
+import com.backend.hocmai_be.DTO.response.CategoryRes;
 import com.backend.hocmai_be.Model.Category;
 import com.backend.hocmai_be.Repositories.CategoriesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.lang.module.ResolutionException;
 import java.util.List;
 
 @Service
@@ -35,9 +38,9 @@ public class CategoriesService {
         categoriesRepository.deleteById(categoryId);
     }
 
-    public Category updateCategory(Category category) {
-        Category category1 = categoriesRepository.findById(category.getId()).get();
-        category1.setCategoryName(category.getCategoryName());
+    public Category updateCategory(CategoryRes categoryReq) {
+        Category category1 = categoriesRepository.findById(categoryReq.getId()).orElseThrow(() -> new ResolutionException("Không tìm thấy danh mục"));
+        category1.setCategoryName(categoryReq.getCategoryName());
         return categoriesRepository.save(category1);
     }
 }

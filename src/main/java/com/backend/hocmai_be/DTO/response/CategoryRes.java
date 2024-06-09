@@ -1,9 +1,9 @@
-package com.backend.hocmai_be.Payload.DTO;
+package com.backend.hocmai_be.DTO.response;
 
 import lombok.Data;
 
 @Data
-public class CategoryDto {
+public class CategoryRes {
     private int id;
     private String categoryName;
 }

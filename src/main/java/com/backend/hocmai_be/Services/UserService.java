@@ -1,8 +1,8 @@
 package com.backend.hocmai_be.Services;
 
 
+import com.backend.hocmai_be.DTO.response.UserRes;
 import com.backend.hocmai_be.Model.User;
-import com.backend.hocmai_be.Payload.DTO.UserDto;
 import com.backend.hocmai_be.Repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,10 +38,10 @@ public class UserService {
         return userRepository.existsUserByEmail(email);
     }
 
-    public UserDto registerUser(UserDto userDto, int userId) {
+    public UserRes registerUser(UserRes userDto, int userId) {
         User user = this.modelMapper.map(userDto, User.class);
         User userSaved = userRepository.save(user);
-        UserDto dto = this.modelMapper.map(userSaved, UserDto.class);
+        UserRes dto = this.modelMapper.map(userSaved, UserRes.class);
         return dto;
     }
 
@@ -76,11 +76,11 @@ public class UserService {
         }
     }
 
-    public List<UserDto> getAllUser() {
+    public List<UserRes> getAllUser() {
         try {
             List<User> list = userRepository.findAll();
             if(list.size() > 0) {
-                List<UserDto> listDto = list.stream().map(user -> modelMapper.map(user, UserDto.class)).collect(Collectors.toList());
+                List<UserRes> listDto = list.stream().map(user -> modelMapper.map(user, UserRes.class)).collect(Collectors.toList());
                 return listDto;
             } else {
                 return null;

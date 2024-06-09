@@ -1,12 +1,13 @@
-package com.backend.hocmai_be.Payload.DTO;
+package com.backend.hocmai_be.DTO.request;
+
 import lombok.Data;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class CourseDto {
+public class CourseReq {
     private int id;
+
     private String courseName;
 
     private Long price;
@@ -17,7 +18,7 @@ public class CourseDto {
 
     private String imageLink;
 
-    private CategoryDto category;
+    private int categoryId;
 
-    private List<ChapterDto> chapters;
+    private List<ChapterReq> chapters;
 }

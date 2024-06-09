@@ -1,4 +1,4 @@
-package com.backend.hocmai_be.Payload.response;
+package com.backend.hocmai_be.DTO.response;
 
 import lombok.Data;
 

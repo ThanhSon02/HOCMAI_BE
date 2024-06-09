@@ -1,8 +1,6 @@
-package com.backend.hocmai_be.Payload.request;
+package com.backend.hocmai_be.DTO.request;
 
 import lombok.Data;
-
-import java.util.Date;
 
 @Data
 public class UserRequest {

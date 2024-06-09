@@ -1,7 +1,7 @@
 package com.backend.hocmai_be.Controllers;
+import com.backend.hocmai_be.DTO.response.CategoryRes;
 import com.backend.hocmai_be.Model.Category;
-import com.backend.hocmai_be.Payload.DTO.CategoryDto;
-import com.backend.hocmai_be.Payload.response.ApiBaseResponse;
+import com.backend.hocmai_be.DTO.response.ApiBaseResponse;
 import com.backend.hocmai_be.Services.CategoriesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,7 +41,7 @@ public class CategoryController {
 
     @PostMapping("/api/category/save")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<ApiBaseResponse> addCategory(@RequestBody CategoryDto categoryDto) {
+    public ResponseEntity<ApiBaseResponse> addCategory(@RequestBody CategoryRes categoryDto) {
         ApiBaseResponse response = new ApiBaseResponse();
         try {
             if(!StringUtils.isEmpty(categoryDto.getCategoryName())) {
@@ -56,8 +56,8 @@ public class CategoryController {
             } else {
                 response.setMessage("Category name is empty!");
                 response.setSuccess(false);
-                response.setStatus(200);
-                return new ResponseEntity<>(response, HttpStatus.OK);
+                response.setStatus(400);
+                return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
             }
         } catch (Exception e) {
             response.setSuccess(false);
@@ -85,20 +85,18 @@ public class CategoryController {
         }
     }
 
-    @PostMapping("/api/category/update")
+    @PutMapping("/api/category/update")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<ApiBaseResponse> updateCategory(@RequestBody CategoryDto request) throws Exception {
+    public ResponseEntity<ApiBaseResponse> updateCategory(@RequestBody CategoryRes request) {
         ApiBaseResponse response = new ApiBaseResponse();
-        Category category = new Category();
         if(StringUtils.isEmpty(request.getCategoryName())) {
             response.setStatus(204);
             response.setSuccess(false);
             response.setMessage("Category name is empty!");
             return new ResponseEntity<>(response,HttpStatus.NO_CONTENT);
         }
-        category.setCategoryName(request.getCategoryName());
         try {
-            Category result = categoriesService.updateCategory(category);
+            Category result = categoriesService.updateCategory(request);
             response.setStatus(200);
             response.setSuccess(true);
             response.setMessage("Update category successfully!");
@@ -115,15 +113,18 @@ public class CategoryController {
         }
     }
 
-    @PostMapping("/api/category/delete/{id}")
+    @DeleteMapping("/api/category/delete/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<ApiBaseResponse> deleteCategory(@PathVariable int id) {
         ApiBaseResponse response = new ApiBaseResponse();
         try{
             categoriesService.deleteCategory(id);
+            Map map = new HashMap();
+            map.put("categoryDeleted", id);
             response.setSuccess(true);
             response.setStatus(200);
             response.setMessage("Delete category successfully!");
+            response.setData(map);
             return new ResponseEntity<>(response,HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

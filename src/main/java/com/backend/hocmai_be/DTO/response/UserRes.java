@@ -1,4 +1,4 @@
-package com.backend.hocmai_be.Payload.DTO;
+package com.backend.hocmai_be.DTO.response;
 
 import com.backend.hocmai_be.Model.Role;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDto {
+public class UserRes {
     private int id;
     private String email;
     private String avatar;

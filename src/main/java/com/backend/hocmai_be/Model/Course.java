@@ -1,5 +1,6 @@
 package com.backend.hocmai_be.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Generated;
@@ -7,10 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minidev.json.annotate.JsonIgnore;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Data
@@ -42,6 +40,12 @@ public class Course {
     @JsonIgnore
     private List<Chapter> chapters = new ArrayList<>();
 
+    @ManyToMany(mappedBy = "courses")
+    @JsonBackReference
+    private Set<Collection> collections = new HashSet<>();
+
+    @OneToMany(mappedBy = "course")
+    private Set<CollectionMapCourse> collectionMapCourses = new HashSet<>();
     public Course(String courseName, Long price, Long salePrice, String description, String imageLink, Category category) {
         this.courseName = courseName;
         this.price = price;

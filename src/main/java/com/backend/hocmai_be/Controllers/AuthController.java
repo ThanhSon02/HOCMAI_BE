@@ -1,13 +1,13 @@
 package com.backend.hocmai_be.Controllers;
 
 import com.backend.hocmai_be.Config.CustomUserDetailsService;
+import com.backend.hocmai_be.DTO.response.UserRes;
 import com.backend.hocmai_be.Model.Role;
 import com.backend.hocmai_be.Model.User;
-import com.backend.hocmai_be.Payload.request.LoginRequest;
-import com.backend.hocmai_be.Payload.request.UserRequest;
-import com.backend.hocmai_be.Payload.response.ApiBaseResponse;
-import com.backend.hocmai_be.Payload.response.JwtAuthResponse;
-import com.backend.hocmai_be.Payload.DTO.UserDto;
+import com.backend.hocmai_be.DTO.request.LoginRequest;
+import com.backend.hocmai_be.DTO.request.UserRequest;
+import com.backend.hocmai_be.DTO.response.ApiBaseResponse;
+import com.backend.hocmai_be.DTO.response.JwtAuthResponse;
 import com.backend.hocmai_be.Services.RoleService;
 import com.backend.hocmai_be.Services.UserService;
 import com.backend.hocmai_be.Util.JwtUtil;
@@ -81,7 +81,7 @@ public class AuthController {
         }
         User userDetails = userDetailsService.loadUserByUsername(loginRequest.getEmail());
         String jwt = jwtUtil.generateToken(userDetails);
-        UserDto userResponse = new UserDto(userDetails.getId(),userDetails.getEmail(),userDetails.getAvatar(),userDetails.getGender(),userDetails.getDateOfBirth(), userDetails.getPhone(), userDetails.getName(),userDetails.getRoles());
+        UserRes userResponse = new UserRes(userDetails.getId(),userDetails.getEmail(),userDetails.getAvatar(),userDetails.getGender(),userDetails.getDateOfBirth(), userDetails.getPhone(), userDetails.getName(),userDetails.getRoles());
         JwtAuthResponse jwtAuthResponse = new JwtAuthResponse();
         jwtAuthResponse.setToken(jwt);
         Map<String, Object> map = new HashMap<>();

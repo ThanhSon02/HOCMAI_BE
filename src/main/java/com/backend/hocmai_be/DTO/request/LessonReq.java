@@ -1,11 +1,9 @@
-package com.backend.hocmai_be.Payload.DTO;
+package com.backend.hocmai_be.DTO.request;
 
 import lombok.Data;
 
 @Data
-public class LessonDto {
-    private int id;
+public class LessonReq {
     private String lessonName;
     private String lessonVideo;
-
 }

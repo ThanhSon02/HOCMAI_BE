@@ -1,11 +1,11 @@
 package com.backend.hocmai_be.Controllers;
 
+import com.backend.hocmai_be.DTO.response.UserRes;
 import com.backend.hocmai_be.Model.User;
-import com.backend.hocmai_be.Payload.request.ChangePasswordRequest;
-import com.backend.hocmai_be.Payload.request.CheckPassRequest;
-import com.backend.hocmai_be.Payload.request.UserRequest;
-import com.backend.hocmai_be.Payload.response.ApiBaseResponse;
-import com.backend.hocmai_be.Payload.DTO.UserDto;
+import com.backend.hocmai_be.DTO.request.ChangePasswordRequest;
+import com.backend.hocmai_be.DTO.request.CheckPassRequest;
+import com.backend.hocmai_be.DTO.request.UserRequest;
+import com.backend.hocmai_be.DTO.response.ApiBaseResponse;
 import com.backend.hocmai_be.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,7 +45,7 @@ public class UserController {
             Date dateOfBirth = new Date(request.getDateOfBirth());
             user.setDateOfBirth(dateOfBirth);
             userService.save(user);
-            UserDto userResponse = new UserDto(user.getId(),user.getEmail(),user.getAvatar(),user.getGender(),user.getDateOfBirth(), user.getPhone(), user.getName(),user.getRoles());
+            UserRes userResponse = new UserRes(user.getId(),user.getEmail(),user.getAvatar(),user.getGender(),user.getDateOfBirth(), user.getPhone(), user.getName(),user.getRoles());
             response.setMessage("Update successfully");
             response.setStatus(200);
             response.setSuccess(true);
@@ -111,7 +111,7 @@ public class UserController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<ApiBaseResponse> getAllUser() {
         ApiBaseResponse response = new ApiBaseResponse();
-        List<UserDto> allUser = userService.getAllUser();
+        List<UserRes> allUser = userService.getAllUser();
         if (allUser != null) {
             Map<String , Object> map = new HashMap<>();
             map.put("allUser", allUser);

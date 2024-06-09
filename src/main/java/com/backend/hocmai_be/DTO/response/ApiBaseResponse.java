@@ -1,13 +1,10 @@
-package com.backend.hocmai_be.Payload.response;
+package com.backend.hocmai_be.DTO.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import net.minidev.json.annotate.JsonIgnore;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 
 import java.util.Map;
-import java.util.Optional;
 
 @Data
 public class ApiBaseResponse {
